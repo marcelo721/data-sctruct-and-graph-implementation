@@ -9,7 +9,8 @@ class GraphList {
     int v;
     int nullEdgeIndex;
     vector<TypeItem> vertex; // Array to store the vertices
-    vector<list<TypeItem>> adj; // Adjacency list representation of the graph
+    vector<list<TypeItem>> adj;
+    void dfsUtil(int currentIndex, vector<bool>& visited,vector<TypeItem>& result);//  void dfsUtil(int currentIndex, vector<bool>& visited);Adjacency list representation of the graph
 
     public:
     GraphList(int v, int nullEdgeIndex); // Constructor to initialize the graph with a given number of vertices
@@ -22,5 +23,8 @@ class GraphList {
     bool isFull(); // Function to check if the graph is full
     int getvertexDegree(TypeItem); // Function to get the degree of a vertex
     void PrinterAdjacencyList(); // Function to print the adjacency list of the graph
+    void bfs(TypeItem startVertex);
+    vector<TypeItem> dfs(TypeItem startVertex);
+
 
 };

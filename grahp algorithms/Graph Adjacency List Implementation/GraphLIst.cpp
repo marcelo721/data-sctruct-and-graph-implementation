@@ -1,5 +1,7 @@
 #include "GraphList.h"
 #include <iostream>
+#include <queue>
+#include <unordered_set>
 
 using namespace std;
 
@@ -77,6 +79,65 @@ int GraphList::getvertexDegree(TypeItem item) {
     }
     return -1; // Return -1 if the vertex is not found
 }
+
+void GraphList::bfs(TypeItem startVertex) {
+    int startIndex = getIndex(startVertex);
+    if (startIndex == -1) {
+        cout << "Vertex not found.\n";
+        return;
+    }
+
+    vector<bool> visited(vertex.size(), false);
+    queue<int> q;
+
+    visited[startIndex] = true;
+    q.push(startIndex);
+
+    cout << "BFS traversal starting from '" << startVertex << "': ";
+
+    while (!q.empty()) {
+        int current = q.front();
+        q.pop();
+
+        cout << vertex[current] << " ";
+
+        for (const auto& neighborName : adj[current]) {
+            int neighborIndex = getIndex(neighborName);
+            if (neighborIndex != -1 && !visited[neighborIndex]) {
+                visited[neighborIndex] = true;
+                q.push(neighborIndex);
+            }
+        }
+    }
+    cout << endl;
+}
+
+void GraphList::dfsUtil(int currentIndex, vector<bool>& visited, vector<TypeItem>& result) {
+    visited[currentIndex] = true;
+    result.push_back(vertex[currentIndex]);
+
+    for (const auto& neighborName : adj[currentIndex]) {
+        int neighborIndex = getIndex(neighborName);
+        if (neighborIndex != -1 && !visited[neighborIndex]) {
+            dfsUtil(neighborIndex, visited, result);
+        }
+    }
+}
+
+vector<TypeItem> GraphList::dfs(TypeItem startVertex) {
+    int startIndex = getIndex(startVertex);
+    vector<TypeItem> result;
+
+    if (startIndex == -1) {
+        cout << "Vertex not found.\n";
+        return result;
+    }
+
+    vector<bool> visited(vertex.size(), false);
+    dfsUtil(startIndex, visited, result);
+    return result;
+}
+
 
 
 
