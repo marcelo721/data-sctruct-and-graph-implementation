@@ -25,6 +25,5 @@ class GraphList {
     void PrinterAdjacencyList(); // Function to print the adjacency list of the graph
     void bfs(TypeItem startVertex);
     vector<TypeItem> dfs(TypeItem startVertex);
-
-
+    bool isConnected(); // Function to check if the graph is connected
 };

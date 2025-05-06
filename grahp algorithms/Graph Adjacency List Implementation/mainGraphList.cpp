@@ -24,6 +24,7 @@ int main() {
         cout << "3 - Get vertex degree\n";
         cout << "4 - Print graph\n";
         cout << "5 - Print adjacency list\n";
+        cout << "6 - verify is Graph is connected\n";
         cout << "Choose an option: ";
         cin >> option;
 
@@ -63,6 +64,13 @@ int main() {
             case 5:
                 cout << "Adjacency List:\n";
                 graph.PrinterAdjacencyList();
+                break;
+            case 6:
+                if (graph.isConnected()) {
+                    cout << "The graph is connected.\n";
+                } else {
+                    cout << "The graph is not connected.\n";
+                }
                 break;
 
             case 0:

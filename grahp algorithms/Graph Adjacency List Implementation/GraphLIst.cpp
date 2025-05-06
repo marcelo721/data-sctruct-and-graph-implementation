@@ -55,6 +55,7 @@ bool GraphList::isEmpty() {
 bool GraphList::isFull() {
     return vertex.size() == v; // Check if the vertex list is full
 }
+
 void GraphList::printGraph() {
     for (int i = 0; i < vertex.size(); i++) {
         cout << vertex[i] << " -> "; // Print the vertex name
@@ -135,7 +136,28 @@ vector<TypeItem> GraphList::dfs(TypeItem startVertex) {
 
     vector<bool> visited(vertex.size(), false);
     dfsUtil(startIndex, visited, result);
+
+    for(int i = 0; i < vertex.size(); i++) {
+        if (!visited[i]) {
+            dfsUtil(i, visited, result); // Visit unvisited vertices
+        }
+    }
     return result;
+}
+
+
+bool GraphList::isConnected() {
+    if (vertex.empty()) return true; // Grafo vazio é considerado conexo
+
+    vector<bool> visited(vertex.size(), false);
+    vector<TypeItem> result; // Vetor para armazenar os vértices visitados
+    dfsUtil(0, visited, result); // Começa a DFS do primeiro vértice (índice 0)
+
+    // Verifica se todos os vértices foram visitados
+    for (bool v : visited) {
+        if (!v) return false; // Encontrou vértice não visitado
+    }
+    return true;
 }
 
 
