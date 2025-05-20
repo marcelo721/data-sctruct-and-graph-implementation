@@ -227,3 +227,74 @@ bool GraphList::isTree() {
 
     return edges == vertex.size() - 1; // A tree has exactly V - 1 edges
 }
+
+bool GraphList::hasCycleUtil(int currentIndex, vector<bool>& visited, vector<bool>& inStack) {
+    visited[currentIndex] = true;
+    inStack[currentIndex] = true;
+
+    for (const auto& neighborName : adj[currentIndex]) {
+        int neighborIndex = getIndex(neighborName);
+        if (neighborIndex != -1) {
+            if (!visited[neighborIndex]) {
+                if (hasCycleUtil(neighborIndex, visited, inStack)) {
+                    return true;  // ciclo detectado
+                }
+            }
+            else if (inStack[neighborIndex]) {
+                return true;  // ciclo detectado
+            }
+        }
+    }
+
+    inStack[currentIndex] = false;
+    return false;
+}
+
+bool GraphList::hasCycle() {
+    int n = vertex.size();
+    vector<bool> visited(n, false);
+    vector<bool> inStack(n, false);
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            if (hasCycleUtil(i, visited, inStack)) {
+                return true;  // ciclo encontrado
+            }
+        }
+    }
+    return false;  // sem ciclos
+}
+
+bool GraphList::isTopological(){
+    return !hasCycle();
+}
+
+void GraphList::isTopologicalSortUtil(int v, vector<bool>& visited, stack<int>& Stack, vector<list<TypeItem>>& adj) {
+    visited[v] = true;
+
+    for (const auto& neighbor : adj[v]) {
+        int neighborIndex = getIndex(neighbor);
+        if (!visited[neighborIndex]) {
+            isTopologicalSortUtil(neighborIndex, visited, Stack, adj);
+        }
+    }
+    Stack.push(v);
+}
+
+void GraphList::isTopologicalSort() {
+    stack<int> Stack;
+    vector<bool> visited(vertex.size(), false);
+
+    for (int i = 0; i < vertex.size(); i++) {
+        if (!visited[i]) {
+            isTopologicalSortUtil(i, visited, Stack, adj);
+        }
+    }
+
+    cout << "Topological Sort: ";
+    while (!Stack.empty()) {
+        cout << vertex[Stack.top()] << " ";
+        Stack.pop();
+    }
+    cout << endl;
+}

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <stack>
 using namespace std;
 typedef string  TypeItem; // Type of the vertex name
 class GraphList {
@@ -32,4 +33,9 @@ class GraphList {
     bool isBipartiteUtil(int v);
     bool isBipartite(); // Function to check if the graph is bipartite
     bool isTree(); // Function to check if the graph is a tree
+    bool hasCycle();
+    bool GraphList::hasCycleUtil(int currentIndex, vector<bool>& visited, vector<bool>& inStack);
+    void isTopologicalSort();
+    void isTopologicalSortUtil(int v, vector<bool>& visited, stack<int>& Stack, vector<list<TypeItem>>& adj);
+    bool isTopological();
 };

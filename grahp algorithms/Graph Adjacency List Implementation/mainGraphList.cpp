@@ -35,6 +35,12 @@ int main() {
         cout << "6 - verify is Graph is connected\n";
         cout << "7 - verify is Graph is bipartite\n";
         cout << "8 - verify is Graph is tree\n";
+        cout<< "9 - verify is Graph is cycle\n";
+        cout << "10 - verify is Graph is topological sort\n";
+        if (typeGraph == 1){
+            cout << "11 - See topological Sort";
+        }
+        
         cout << "Choose an option: ";
         cin >> option;
 
@@ -98,6 +104,23 @@ int main() {
                 }
                 break;
 
+            case 9: 
+                if (graph.hasCycle()) {
+                    cout << "The graph has a cycle.\n";
+                } else {
+                    cout << "The graph does not have a cycle.\n";
+                }
+                break;
+            case 10:
+                if(graph.isTopological()){
+                    cout<< "O grafo admite uma ordenação topológica";
+                }else {
+                    cout<< "O grafo n admite uma ordenação topológica";
+                }
+
+            case 11:
+                graph.isTopologicalSort();
+                
             case 0:
                 cout << "Exiting...\n";
                 break;
