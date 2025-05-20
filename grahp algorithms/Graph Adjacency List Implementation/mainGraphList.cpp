@@ -4,6 +4,14 @@
 using namespace std;
 
 int main() {
+
+    int typeGraph; 
+
+    cout << "nos informe se seu grafo eh direcionado o n \n";
+    cout << "1 - Grafo direcionado";
+    cout << "2 - Grafo não direcionado";
+
+    cin>> typeGraph;
     int maxVertices, nullEdgeValue;
     cout << "Enter the maximum number of vertices: ";
     cin >> maxVertices;
@@ -11,7 +19,7 @@ int main() {
     cout << "Enter the null edge value (if not used, enter 0): ";
     cin >> nullEdgeValue;
 
-    GraphList graph(maxVertices, nullEdgeValue);
+    GraphList graph(maxVertices, nullEdgeValue, typeGraph);
 
     TypeItem vertex1, vertex2;
     int option, degree;
@@ -23,8 +31,10 @@ int main() {
         cout << "2 - Insert an edge\n";
         cout << "3 - Get vertex degree\n";
         cout << "4 - Print graph\n";
-        cout << "5 - Print adjacency list\n";
+        cout << "5 - Print vertex list\n";
         cout << "6 - verify is Graph is connected\n";
+        cout << "7 - verify is Graph is bipartite\n";
+        cout << "8 - verify is Graph is tree\n";
         cout << "Choose an option: ";
         cin >> option;
 
@@ -62,14 +72,29 @@ int main() {
                 graph.printGraph();
                 break;
             case 5:
-                cout << "Adjacency List:\n";
-                graph.PrinterAdjacencyList();
+                cout << "Vertex List:\n";
+                
                 break;
             case 6:
                 if (graph.isConnected()) {
                     cout << "The graph is connected.\n";
                 } else {
                     cout << "The graph is not connected.\n";
+                }
+                break;
+            
+            case 7:
+                if (graph.isBipartite()) {
+                    cout << "The graph is bipartite.\n";
+                } else {
+                    cout << "The graph is not bipartite.\n";
+                }
+                break;
+            case 8:
+                if (graph.isTree()) {
+                    cout << "The graph is a tree.\n";
+                } else {
+                    cout << "The graph is not a tree.\n";
                 }
                 break;
 

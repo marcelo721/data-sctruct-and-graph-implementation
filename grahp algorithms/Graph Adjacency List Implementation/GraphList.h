@@ -10,10 +10,12 @@ class GraphList {
     int nullEdgeIndex;
     vector<TypeItem> vertex; // Array to store the vertices
     vector<list<TypeItem>> adj;
-    void dfsUtil(int currentIndex, vector<bool>& visited,vector<TypeItem>& result);//  void dfsUtil(int currentIndex, vector<bool>& visited);Adjacency list representation of the graph
+    void dfsUtil(int currentIndex, vector<bool>& visited,vector<TypeItem>& result);
+    int typeGraph;
+    vector<int> color; // Vector to store colors for bipartite checking
 
     public:
-    GraphList(int v, int nullEdgeIndex); // Constructor to initialize the graph with a given number of vertices
+    GraphList(int v, int nullEdgeIndex, int typeGraph); // Constructor to initialize the graph with a given number of vertices
     ~GraphList(); // Destructor to clean up the graph
     void insertVertex(TypeItem); // Function to insert a vertex into the graph
     int getIndex(TypeItem); // Function to get the index of a vertex
@@ -22,8 +24,12 @@ class GraphList {
     bool isEmpty(); // Function to check if the graph is empty
     bool isFull(); // Function to check if the graph is full
     int getvertexDegree(TypeItem); // Function to get the degree of a vertex
-    void PrinterAdjacencyList(); // Function to print the adjacency list of the graph
+    void printVertex(); // Function to print the adjacency list of the graph
     void bfs(TypeItem startVertex);
     vector<TypeItem> dfs(TypeItem startVertex);
     bool isConnected(); // Function to check if the graph is connected
+    int numeroDeComponentesConexas();
+    bool isBipartiteUtil(int v);
+    bool isBipartite(); // Function to check if the graph is bipartite
+    bool isTree(); // Function to check if the graph is a tree
 };

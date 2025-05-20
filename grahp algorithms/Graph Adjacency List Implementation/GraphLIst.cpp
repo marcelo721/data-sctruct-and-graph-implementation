@@ -5,7 +5,7 @@
 
 using namespace std;
 
-GraphList::GraphList(int numberOfVertices, int nullEdgeIndex) {
+GraphList::GraphList(int numberOfVertices, int nullEdgeIndex, int typeGraph) {
     this->v = numberOfVertices;
     this->nullEdgeIndex = nullEdgeIndex;
     adj.resize(v);
@@ -44,8 +44,13 @@ void GraphList::insertEdge(TypeItem item1, TypeItem item2) {
         cout << "Error: vertex not found." << endl;
         return;
     } // Check if both vertices exist
-    adj[index1].push_back(item2); // Add the second vertex to the adjacency list of the first vertex
-    adj[index2].push_back(item1); // Add the first vertex to the adjacency list of the second vertex
+
+    if(typeGraph == 1){// se o grafo n for direcionado 
+        adj[index1].push_back(item2);
+        adj[index2].push_back(item1);
+    }else {
+        adj[index1].push_back(item2);
+    }
 }
 
 bool GraphList::isEmpty() {
@@ -66,9 +71,9 @@ void GraphList::printGraph() {
     }
 }
 
-void GraphList::PrinterAdjacencyList(){
+void GraphList::printVertex(){
     for(int i = 0 ; i < vertex.size(); i++){
-        cout<< adj[i].front() << "  "; // Print the vertex name
+        cout<< vertex[i] << ",  "; // Print the vertex name
     }  
     
 }
@@ -145,7 +150,6 @@ vector<TypeItem> GraphList::dfs(TypeItem startVertex) {
     return result;
 }
 
-
 bool GraphList::isConnected() {
     if (vertex.empty()) return true; // Grafo vazio é considerado conexo
 
@@ -160,7 +164,66 @@ bool GraphList::isConnected() {
     return true;
 }
 
+int GraphList::numeroDeComponentesConexas(){
+    vector<TypeItem> result;
+    int count = 0;
+    if (!isEmpty()){
+        count++;
+    }
+    
+    vector<bool> visited(vertex.size(), false);
+    dfsUtil(0, visited, result);
 
+    for(int i = 0; i < vertex.size(); i++) {
+        if (!visited[i]) {
+            dfsUtil(i, visited, result); // Visit unvisited vertices
+            count ++;
+        }
+    }
+    return count;
+}
 
+bool GraphList::isBipartiteUtil(int v) {
+    for (const auto& neighborName : adj[v]) {
+        int neighborIndex = getIndex(neighborName);
+        if (neighborIndex != -1) {
+            if (color[neighborIndex] == -1) {
+                color[neighborIndex] = 1 - color[v]; 
+                if (!isBipartiteUtil(neighborIndex)) {
+                    return false; 
+                }
+            } else if (color[neighborIndex] == color[v]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
+bool GraphList::isBipartite() {
+        int n = vertex.size();
+        color.assign(n, -1);  
+        for (int i = 0; i < n; ++i) {
+            if (color[i] == -1) {
+                color[i] = 0;
+                if (!isBipartiteUtil(i)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
+bool GraphList::isTree() {
+    if (!isConnected()) {
+        return false; // If the graph is not connected, it cannot be a tree
+    }
+
+    int edges = 0;
+    for (int i = 0; i < vertex.size(); i++) {
+        edges += adj[i].size();
+    }
+    edges /= 2; // Each edge is counted twice in an undirected graph
+
+    return edges == vertex.size() - 1; // A tree has exactly V - 1 edges
+}
