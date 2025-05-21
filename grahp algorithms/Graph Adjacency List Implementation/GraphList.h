@@ -34,7 +34,7 @@ class GraphList {
     bool isBipartite(); // Function to check if the graph is bipartite
     bool isTree(); // Function to check if the graph is a tree
     bool hasCycle();
-    bool GraphList::hasCycleUtil(int currentIndex, vector<bool>& visited, vector<bool>& inStack);
+    bool hasCycleUtil(int currentIndex, vector<bool>& visited, vector<bool>& inStack);
     void isTopologicalSort();
     void isTopologicalSortUtil(int v, vector<bool>& visited, stack<int>& Stack, vector<list<TypeItem>>& adj);
     bool isTopological();

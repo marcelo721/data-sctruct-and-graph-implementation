@@ -8,8 +8,8 @@ int main() {
     int typeGraph; 
 
     cout << "nos informe se seu grafo eh direcionado o n \n";
-    cout << "1 - Grafo direcionado";
-    cout << "2 - Grafo não direcionado";
+    cout << "1 - Grafo direcionado \n";
+    cout << "2 - Grafo nao direcionado \n";
 
     cin>> typeGraph;
     int maxVertices, nullEdgeValue;
@@ -79,7 +79,7 @@ int main() {
                 break;
             case 5:
                 cout << "Vertex List:\n";
-                
+                graph.printVertex();
                 break;
             case 6:
                 if (graph.isConnected()) {
@@ -113,9 +113,9 @@ int main() {
                 break;
             case 10:
                 if(graph.isTopological()){
-                    cout<< "O grafo admite uma ordenação topológica";
+                    cout<< "O grafo admite uma ordenacao topologica";
                 }else {
-                    cout<< "O grafo n admite uma ordenação topológica";
+                    cout<< "O grafo n admite uma ordenacao topologica";
                 }
 
             case 11:
